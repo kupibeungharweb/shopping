@@ -1,32 +1,33 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import pb from '@/lib/pocketbaseClient';
+import React, { createContext, useContext } from "react";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(pb.authStore.record);
+  const value = {
+    user: null,
+    isAuthed: false,
 
-    useEffect(() => pb.authStore.onChange((_token, record) => setUser(record)), []);
+    login: async () => {
+      console.warn("Login dinonaktifkan pada versi GitHub Pages.");
+    },
 
-    const value = useMemo(
-        () => ({
-            user,
-            isAuthed: pb.authStore.isValid,
-            login: (email, password) => pb.collection('users').authWithPassword(email, password),
-            signup: async (email, password, extraFields = {}) => {
-                await pb.collection('users').create({ email, password, passwordConfirm: password, ...extraFields });
+    signup: async () => {
+      console.warn("Signup dinonaktifkan pada versi GitHub Pages.");
+    },
 
-                return pb.collection('users').authWithPassword(email, password);
-            },
-            logout: () => pb.authStore.clear(),
-            loginWithGoogle: () =>
-                pb.collection('users').authWithOAuth2({ provider: 'google' }),
-        }),
-        [user],
-    );
+    logout: () => {},
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+    loginWithGoogle: async () => {
+      console.warn("Login Google dinonaktifkan.");
+    },
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 export const useAuth = () => useContext(AuthContext);
 
