@@ -10,7 +10,7 @@ import ShoppingCart from './components/ShoppingCart';
 import HomePage from './pages/HomePage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import SuccessPage from './pages/SuccessPage';
-import LoginPage from './pages/LoginPage';
+
 
 function App() {
     const [isCartOpen, setIsCartOpen] = useState(false);
